@@ -106,4 +106,9 @@ For the purpose of the exercise and to make things easier I've implemented
 an `InMemoryDAL` class who indeed, relies on in-memory objects built after
 reading films data from films.csv while customers data are (brutally) embedded.
 The `VideoRentalStoreDSL` (thus `InMemoryDAL`) lacks the save/update method that 
-I've omitted to simplify.
+I've omitted to simplify.  
+The application.properties file allow to change the parameters given by the problem.
+Changing the default currency (from `SEK`) actually doesn't produce any result, but it would produce  
+allowing customers to specify a different currency from the default one.  
+To this end we should (among other things) implement the `RentalStoreService.calculateConversionRate`  
+who currently works with only the the default currency.
