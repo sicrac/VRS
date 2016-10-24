@@ -21,7 +21,7 @@ import org.springframework.stereotype.Service;
 @EnableAutoConfiguration
 @PropertySource("application.properties")
 public class VideoRentalStoreService {
-    
+
     static public class  Payment {
         private final int dailyPriceThreshold;
         private final Money basePrice;
@@ -55,10 +55,10 @@ public class VideoRentalStoreService {
     private int regularBonus;
     @Value("${service.basic_bonus}")
     private int basicBonus;
-    
+
     private Map<FilmKind, Payment> payments;
     private Map<FilmKind, Integer> bonus;
-    
+
     @PostConstruct
     public void init(){
         currencyUnit = CurrencyUnit.of(currency);
@@ -71,17 +71,22 @@ public class VideoRentalStoreService {
         bonus.put(FilmKind.REGULAR, regularBonus);
         bonus.put(FilmKind.OLD, basicBonus);
     }
-    
+
+    /**
+     * This method was meant to allow customers to specify a currency as well as
+     * allowing the administrator to set a currency (other than SEK)
+     * through the application.properties file.
+     */
     private BigDecimal calculateConversionRate(CurrencyUnit currencyUnit){
         if (currencyUnit.equals(this.currencyUnit))
             return BigDecimal.ONE;
         throw new UnsupportedOperationException("The conversion rate should be got by querying an external service.");
     }
-    
+
     public BigDecimal calculatePrice(FilmKind filmKind, int days) {
         return calculatePrice(filmKind, days, currencyUnit);
     }
-    
+
     public BigDecimal calculatePrice(FilmKind filmKind, int days, CurrencyUnit currencyUnit) {
         Payment payment = payments.get(filmKind);
         Money money = payment.basePrice;
@@ -90,11 +95,11 @@ public class VideoRentalStoreService {
         money = money.convertedTo(currencyUnit, calculateConversionRate(currencyUnit), RoundingMode.UNNECESSARY);
         return money.getAmount();
     }
-    
+
     public BigDecimal calculateSurcharge(FilmKind filmKind, LocalDate rentalDate, LocalDate endRentalDate, LocalDate returningDate){
         return calculateSurcharge(filmKind, currencyUnit, rentalDate, endRentalDate, returningDate);
     }
-    
+
     public BigDecimal calculateSurcharge(FilmKind filmKind, CurrencyUnit currencyUnit, LocalDate rentalDate, LocalDate endRentalDate, LocalDate currentDate){
         if (currentDate.isEqual(endRentalDate) || currentDate.isBefore(endRentalDate))
             return BigDecimal.ZERO;
@@ -102,7 +107,7 @@ public class VideoRentalStoreService {
         Payment payment = payments.get(filmKind);
         return payment.basePrice.multipliedBy(daysToSurcharge).getAmount();
     }
-    
+
     public int calculateBonus(FilmKind filmKind){
         return bonus.get(filmKind);
     }
