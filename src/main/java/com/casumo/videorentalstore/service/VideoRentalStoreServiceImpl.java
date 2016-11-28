@@ -60,7 +60,7 @@ public class VideoRentalStoreServiceImpl implements VideoRentalStoreService {
     private Map<FilmKind, Integer> bonus;
 
     @PostConstruct
-    public void init(){
+    private void init(){
         currencyUnit = CurrencyUnit.of(currency);
         payments = new HashMap<>();
         payments.put(FilmKind.NEW, Payment.make(premiumDays, currencyUnit, premiumPrice));

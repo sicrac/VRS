@@ -95,21 +95,20 @@ public class OperationSummary {
     public LocalDate getEndRentalDate(){
         return endRentalDate;
     }
-    
+
     public void setSuccess(boolean success){
         this.success = success;
     }
-    
+
     public boolean getSuccess(){
         return success;
     }
-    
+
     public void setErrorMessage(String errorMessage){
         this.errorMessage = errorMessage;
     }
-    
+
     public String getErrorMessage(){
         return errorMessage;
     }
-    
 }

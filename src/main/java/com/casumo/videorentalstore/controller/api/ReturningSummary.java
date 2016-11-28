@@ -12,11 +12,11 @@ public class ReturningSummary extends OperationSummary{
     @JsonDeserialize(using = LocalDateDeserializer.class)
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern=DATE_PATTERN)
     private LocalDate returningDate;
-    
+
     public ReturningSummary(String errorMessage){
         super(errorMessage);
     }
-    
+
     public ReturningSummary(){
         super();
     }
@@ -34,5 +34,5 @@ public class ReturningSummary extends OperationSummary{
     public void setReturningDate(LocalDate returningDate) {
         this.returningDate = returningDate;
     }
-    
+
 }

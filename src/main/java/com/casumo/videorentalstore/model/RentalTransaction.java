@@ -88,9 +88,8 @@ public class RentalTransaction{
     public void setReturningDate(LocalDate returningDate) {
         this.returningDate = returningDate;
     }
-    
+
     public LocalDate getEndRentalDate(){
         return rentalDate.plusDays(days);
     }
-    
 }
