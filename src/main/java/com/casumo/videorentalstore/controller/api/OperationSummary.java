@@ -25,19 +25,19 @@ class OperationSummary {
             this.price = price;
         }
 
-        public int getFilmId() {
+        int getFilmId() {
             return filmId;
         }
 
-        public String getTitle() {
+        String getTitle() {
             return title;
         }
 
-        public FilmFlag getFlag() {
+        FilmFlag getFlag() {
             return flag;
         }
 
-        public BigDecimal getPrice() {
+        BigDecimal getPrice() {
             return price;
         }
     }
