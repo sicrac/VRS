@@ -8,11 +8,11 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OperationSummary {
+class OperationSummary {
 
-    public static final String DATE_PATTERN = "yyyy-MM-dd";
+    static final String DATE_PATTERN = "yyyy-MM-dd";
 
-    public static class FilmSummary {
+    static class FilmSummary {
 
         private final int filmId;
         private final String title;
