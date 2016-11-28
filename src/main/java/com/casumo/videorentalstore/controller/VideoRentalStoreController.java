@@ -8,7 +8,7 @@ import com.casumo.videorentalstore.controller.api.RentalSummary;
 import com.casumo.videorentalstore.controller.api.ReturningSummary;
 import com.casumo.videorentalstore.dal.InMemoryDAL;
 import com.casumo.videorentalstore.model.Customer;
-import com.casumo.videorentalstore.service.VideoRentalStoreService;
+import com.casumo.videorentalstore.service.VideoRentalStoreServiceImpl;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -33,7 +33,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class VideoRentalStoreController {
 
     @Autowired
-    private VideoRentalStoreService videoRentalStoreService;
+    private VideoRentalStoreServiceImpl videoRentalStoreService;
 
     @Autowired
     private InMemoryDAL videoRentalStoreDAL;
