@@ -99,7 +99,6 @@ public class InMemoryDAL implements VideoRentalStoreDAL {
         rentalTransaction.setId(rentalId);
         transactions.put(rentalId, rentalTransaction);
         ongoningTransactions.put(username, rentalId);
-        Customer customer = findCustomerById(username);
         return rentalTransaction;
     }
 
