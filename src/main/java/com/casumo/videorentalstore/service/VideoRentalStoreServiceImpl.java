@@ -92,8 +92,9 @@ public class VideoRentalStoreServiceImpl implements VideoRentalStoreService {
     public BigDecimal calculatePrice(FilmKind filmKind, int days, CurrencyUnit currencyUnit) {
         Payment payment = payments.get(filmKind);
         Money money = payment.basePrice;
-        if (days > payment.dailyPriceThreshold)
+        if (days > payment.dailyPriceThreshold){
             money = money.multipliedBy(days - Math.max(0, payment.dailyPriceThreshold - 1));
+        }
         money = money.convertedTo(currencyUnit, calculateConversionRate(currencyUnit), RoundingMode.UNNECESSARY);
         return money.getAmount();
     }
@@ -105,8 +106,9 @@ public class VideoRentalStoreServiceImpl implements VideoRentalStoreService {
 
     @Override
     public BigDecimal calculateSurcharge(FilmKind filmKind, CurrencyUnit currencyUnit, LocalDate rentalDate, LocalDate endRentalDate, LocalDate currentDate){
-        if (currentDate.isEqual(endRentalDate) || currentDate.isBefore(endRentalDate))
+        if (currentDate.isEqual(endRentalDate) || currentDate.isBefore(endRentalDate)){
             return BigDecimal.ZERO;
+        }
         long daysToSurcharge = DAYS.between(endRentalDate, currentDate);
         Payment payment = payments.get(filmKind);
         return payment.basePrice.multipliedBy(daysToSurcharge).getAmount();

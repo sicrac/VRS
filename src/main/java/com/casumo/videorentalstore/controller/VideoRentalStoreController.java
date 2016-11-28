@@ -58,11 +58,13 @@ public class VideoRentalStoreController {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = (User) auth.getPrincipal();
-        if (!user.getUsername().equals(username))
+        if (!user.getUsername().equals(username)){
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new RentalSummary("You tried to perform an forbidden action"));
+        }
 
-        if (videoRentalStoreDAL.findOngoingTransaction(user.getUsername()) != null)
+        if (videoRentalStoreDAL.findOngoingTransaction(user.getUsername()) != null){
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new RentalSummary("You have an ongoing rental"));
+        }
 
         List<Film> films = new ArrayList<>();
         BigDecimal totalPrice = BigDecimal.ZERO;
@@ -70,11 +72,11 @@ public class VideoRentalStoreController {
         int bonus = 0;
         for(Integer filmId: filmIds){
             Film film = videoRentalStoreDAL.findFilmById(filmId);
-            if (film == null)
+            if (film == null){
                 rentalSummary.addFilmDetail(filmId, null, FilmFlag.NOT_FOUND, BigDecimal.ZERO);
-            else if (!film.getAvailable())
+            } else if (!film.getAvailable()){
                 rentalSummary.addFilmDetail(filmId, film.getTitle(), FilmFlag.UNAVAILABLE, BigDecimal.ZERO);
-            else{
+            } else {
                 films.add(film);
                 film.setAvailable(false);
                 BigDecimal price = videoRentalStoreService.calculatePrice(film.getKind(), days);
@@ -110,15 +112,18 @@ public class VideoRentalStoreController {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = (User) auth.getPrincipal();
-        if (!user.getUsername().equals(username))
+        if (!user.getUsername().equals(username)){
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new ReturningSummary("You tried to perform a forbidden action"));
+        }
 
         RentalTransaction rentalTransaction = videoRentalStoreDAL.findOngoingTransaction(user.getUsername());
-        if (rentalTransaction == null)
+        if (rentalTransaction == null){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ReturningSummary("You haven't an ongoing rental"));
+        }
 
-        if (!rentalTransaction.getId().equals(rentalId))
+        if (!rentalTransaction.getId().equals(rentalId)){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ReturningSummary(String.format("You haven't an ongoing transaction with id='%s'", rentalId)));
+        }
 
         ReturningSummary returningSummary = new ReturningSummary();
         BigDecimal totalPrice = BigDecimal.ZERO;
