@@ -104,8 +104,9 @@ public class InMemoryDAL implements VideoRentalStoreDAL {
 
     @Override
     public RentalTransaction findOngoingTransaction(String username) {
-        if (ongoningTransactions.get(username) != null)
+        if (ongoningTransactions.get(username) != null){
             return transactions.get(ongoningTransactions.get(username));
+        }
         return null;
     }
 
