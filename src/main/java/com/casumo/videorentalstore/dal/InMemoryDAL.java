@@ -64,13 +64,13 @@ public class InMemoryDAL implements VideoRentalStoreDAL {
 
     @Override
     public List<Film> listFilms(String search, FilmKind kind, boolean availableOnly) {
-        if (search != null && kind != null && availableOnly == true){
+        if (search != null && kind != null && availableOnly){
             return listFilms(f -> f.getTitle().contains(search) && f.getKind().equals(kind) && f.getAvailable());
         }
-        if (search != null && availableOnly == true){
+        if (search != null && availableOnly){
             return listFilms(f -> f.getTitle().contains(search) && f.getAvailable());
         }
-        if (kind != null && availableOnly == true){
+        if (kind != null && availableOnly){
             return listFilms(f -> f.getKind().equals(kind));
         }
         if (kind != null && search != null){
@@ -82,7 +82,7 @@ public class InMemoryDAL implements VideoRentalStoreDAL {
         if (kind != null){
             return listFilms(f -> f.getKind().equals(kind));
         }
-        if (availableOnly == true){
+        if (availableOnly){
             return listFilms(f -> f.getAvailable());
         }
         return new ArrayList(films.values());
